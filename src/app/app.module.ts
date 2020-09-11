@@ -6,6 +6,7 @@ import {HttpClientModule} from '@angular/common/http';
 
 import * as firebase from 'firebase/app';
 import 'firebase/auth';
+import { DateFormat } from './shared/custom.pipe';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -16,14 +17,20 @@ import { HomeComponent } from './home/home.component';
 import { CapitalizePipe } from './capitalize.pipe';
 import { SalutationPipe } from './salutation.pipe';
 import { MenuComponent } from './menu/menu.component';
-import { MyblogsComponent } from './myblogs/myblogs.component';
-import { ProfileComponent } from './profile/profile.component';
-import { CreateComponent } from './create/create.component';  
 import { AuthService } from './auth.service';
-import { PostComponent } from './post/post.component';
-import { ViewComponent } from './view/view.component';
-import { CommentsComponent } from './comments/comments.component';
-import { EditProfileComponent } from './edit-profile/edit-profile.component';
+import { MovieListComponent } from './movie-list/movie-list.component';
+
+import {
+  MatInputModule,
+  MatCardModule,
+  MatGridListModule,
+  MatChipsModule,
+  MatDialogModule,
+  MatIconModule,
+  MatProgressSpinnerModule,
+  MatFormFieldModule
+} from '@angular/material';
+import { DetailsComponent } from './details/details.component';
 
 let firebaseConfig = {
   apiKey: "AIzaSyDi5XfDy2cbJcApeqU_-7IkU_GbXU97XJE",
@@ -47,13 +54,9 @@ firebase.initializeApp(firebaseConfig);
     CapitalizePipe,
     SalutationPipe,
     MenuComponent,
-    MyblogsComponent,
-    ProfileComponent,
-    CreateComponent,
-    PostComponent,
-    ViewComponent,
-    CommentsComponent,
-    EditProfileComponent
+    MovieListComponent,
+    DetailsComponent,
+    DateFormat
   ],
   imports: [
     BrowserModule,
@@ -61,7 +64,15 @@ firebase.initializeApp(firebaseConfig);
     FormsModule,
     ReactiveFormsModule,
     AngularEditorModule,
-    HttpClientModule, 
+    HttpClientModule,
+    MatIconModule,
+    MatCardModule,
+    MatInputModule,
+    MatGridListModule,
+    MatProgressSpinnerModule,
+    MatChipsModule,
+    MatDialogModule,
+    MatFormFieldModule,
   ],
   providers: [AuthService],
   bootstrap: [AppComponent]
