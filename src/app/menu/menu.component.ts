@@ -1,49 +1,33 @@
-import { Component, OnInit } from '@angular/core';
-import * as firebase from 'firebase/app';
-import 'firebase/auth';
+import { Component, OnInit, inject } from '@angular/core';
+import { Auth, onAuthStateChanged, signOut, user as userObservable } from '@angular/fire/auth';
+import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-menu',
   templateUrl: './menu.component.html',
-  styleUrls: ['./menu.component.css']
+  styleUrls: ['./menu.component.css'],
+  standalone: false,
 })
 export class MenuComponent implements OnInit {
-
-  loggedIn:boolean=false;
-  user:any;
+  private auth = inject(Auth);
+  user$: Observable<any>;
+  loggedIn = false;
+  user: any;
 
   constructor() {
+    this.user$ = userObservable(this.auth);
 
-    this.user=firebase.auth().currentUser;
-
-    if(this.user)
-    {
-      this.loggedIn=true;
-    }
-    else{
-      this.loggedIn=false;
-    }
-
-    firebase.auth().onAuthStateChanged((user)=>{
-      
-      this.user=user;
-      if(user)
-    {
-      this.loggedIn=true;
-    }
-    else{
-      this.loggedIn=false;
-    }
-
-    })
-   }
-
-  ngOnInit(): void {
-  }
-  
-  logout()
-  {
-    firebase.auth().signOut();
+    onAuthStateChanged(this.auth, (user) => {
+      this.user = user;
+      this.loggedIn = !!user;
+    });
   }
 
+  ngOnInit(): void {}
+
+  logout(): void {
+    signOut(this.auth);
+  }
 }

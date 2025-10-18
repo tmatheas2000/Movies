@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { MatDialog, MatDialogConfig } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
 import { RestApiService } from '../shared/rest-api.service';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
-  selector: 'app-details',
-  templateUrl: './details.component.html',
-  styleUrls: ['./details.component.sass']
+    selector: 'app-details',
+    templateUrl: './details.component.html',
+    styleUrls: ['./details.component.sass'],
+    standalone: false
 })
 export class DetailsComponent implements OnInit {
 

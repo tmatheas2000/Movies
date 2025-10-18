@@ -1,7 +1,8 @@
 <section class="content" role="main">
-    
-    <div class="container">
-      <mat-card class="card mt-3" *ngFor="let movie of Movies.results" style="padding: 0; height: 280px" routerLink="/movie-details/{{movie.id}}">
+
+  <div class="container">
+    @for (movie of Movies.results; track movie) {
+      <mat-card class="card mt-3" style="padding: 0; height: 280px" routerLink="/movie-details/{{movie.id}}">
         <mat-grid-list cols="5" rowHeight="280px" class="fade-in">
           <mat-grid-tile>
             <img src="https://image.tmdb.org/t/p/w500{{movie.poster_path}}" class="movie-poster" alt="{{movie.title}}" />
@@ -11,7 +12,7 @@
               <mat-card-header>
                 <mat-card-title>
                   <h4>
-                  <a mat-button routerLink="/movie-details/{{movie.id}}" class="movie-title">{{movie.title}}</a>
+                    <a mat-button routerLink="/movie-details/{{movie.id}}" class="movie-title">{{movie.title}}</a>
                   </h4>
                 </mat-card-title>
                 <mat-card-subtitle><i>{{movie.release_date | date}}</i></mat-card-subtitle>
@@ -26,12 +27,15 @@
           </mat-grid-tile>
         </mat-grid-list>
       </mat-card>
-      <mat-card *ngIf="noResult">
+    }
+    @if (noResult) {
+      <mat-card>
         <mat-card-content>
           <mat-card-header>
             <h2>No movies found...</h2>
           </mat-card-header>
         </mat-card-content>
       </mat-card>
-    </div>
-  </section>
+    }
+  </div>
+</section>

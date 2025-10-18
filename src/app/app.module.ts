@@ -2,16 +2,11 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import {FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AngularEditorModule } from '@kolkov/angular-editor';
-import {HttpClientModule} from '@angular/common/http';
-
-import * as firebase from 'firebase/app';
-import 'firebase/auth';
-import { DateFormat } from './shared/custom.pipe';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SignupComponent } from './signup/signup.component';
-import { config } from 'rxjs';
 import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
 import { CapitalizePipe } from './capitalize.pipe';
@@ -20,17 +15,18 @@ import { MenuComponent } from './menu/menu.component';
 import { AuthService } from './auth.service';
 import { MovieListComponent } from './movie-list/movie-list.component';
 
-import {
-  MatInputModule,
-  MatCardModule,
-  MatGridListModule,
-  MatChipsModule,
-  MatDialogModule,
-  MatIconModule,
-  MatProgressSpinnerModule,
-  MatFormFieldModule
-} from '@angular/material';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatIconModule } from '@angular/material/icon';
 import { DetailsComponent } from './details/details.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import {MatCardModule} from '@angular/material/card';
+import { MatInputModule } from '@angular/material/input';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
+import { provideAuth, getAuth } from '@angular/fire/auth';
+import { DateFormatPipe } from "./shared/custom.pipe";
 
 let firebaseConfig = {
   apiKey: "AIzaSyDi5XfDy2cbJcApeqU_-7IkU_GbXU97XJE",
@@ -43,38 +39,29 @@ let firebaseConfig = {
   measurementId: "G-DX9G0YVRR0"
 };
 
-firebase.initializeApp(firebaseConfig);
-
-@NgModule({
-  declarations: [
-    AppComponent,
-    SignupComponent,
-    LoginComponent,
-    HomeComponent,
-    CapitalizePipe,
-    SalutationPipe,
-    MenuComponent,
-    MovieListComponent,
-    DetailsComponent,
-    DateFormat
-  ],
-  imports: [
-    BrowserModule,
+@NgModule({ declarations: [
+        AppComponent,
+        SignupComponent,
+        LoginComponent,
+        HomeComponent,
+        CapitalizePipe,
+        SalutationPipe,
+        MenuComponent,
+        MovieListComponent,
+        DetailsComponent,
+    ],
+    bootstrap: [AppComponent], imports: [BrowserModule,
     AppRoutingModule,
     FormsModule,
+    MatCardModule,
     ReactiveFormsModule,
     AngularEditorModule,
-    HttpClientModule,
     MatIconModule,
-    MatCardModule,
-    MatInputModule,
     MatGridListModule,
+    MatInputModule,
     MatProgressSpinnerModule,
     MatChipsModule,
-    MatDialogModule,
     MatFormFieldModule,
-  ],
-  providers: [AuthService],
-  bootstrap: [AppComponent]
-})
+    MatDialogModule, DateFormatPipe], 
+        providers: [AuthService, provideHttpClient(withInterceptorsFromDi()), provideFirebaseApp(() => initializeApp(firebaseConfig)), provideAuth(() => getAuth())] })
  export class AppModule { }

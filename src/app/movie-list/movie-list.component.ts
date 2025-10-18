@@ -2,9 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { RestApiService } from '../shared/rest-api.service';
 
 @Component({
-  selector: 'app-movie-list',
-  templateUrl: './movie-list.component.html',
-  styleUrls: ['./movie-list.component.css']
+    selector: 'app-movie-list',
+    templateUrl: './movie-list.component.html',
+    styleUrls: ['./movie-list.component.css'],
+    standalone: false
 })
 export class MovieListComponent implements OnInit {
 
